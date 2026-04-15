@@ -66,32 +66,32 @@
 
     <!-- EVALUATION PIPELINE -->
     <section class="py-16 px-4" id="pipeline">
-      <div class="max-w-5xl mx-auto">
+      <div class="max-w-4xl mx-auto">
         <h2 class="section-title">Evaluation Pipeline</h2>
         <p class="section-subtitle">A strategy is counted as successful only if it passes all four stages sequentially.</p>
-        <div class="mt-10 grid grid-cols-1 md:grid-cols-4 gap-0 items-start pipeline-grid">
-          <div class="pipeline-step">
-            <div class="pipeline-icon bg-emerald-100 text-emerald-700">1</div>
-            <h3 class="font-semibold mt-3">Compilation</h3>
-            <p class="text-sm text-gray-500 mt-1">Code is syntactically correct and can be interpreted without errors.</p>
+        <div class="mt-10 pipeline-horizontal">
+          <div class="pipeline-node">
+            <div class="pipeline-dot dot-emerald"></div>
+            <div class="pipeline-label">Compilation</div>
+            <div class="pipeline-desc">Syntactically correct, no interpretation errors</div>
           </div>
-          <div class="pipeline-arrow hidden md:flex">&rarr;</div>
-          <div class="pipeline-step">
-            <div class="pipeline-icon bg-blue-100 text-blue-700">2</div>
-            <h3 class="font-semibold mt-3">Backtest</h3>
-            <p class="text-sm text-gray-500 mt-1">Strategy executes on historical market data spanning diverse assets and timeframes without runtime errors.</p>
+          <div class="pipeline-connector"></div>
+          <div class="pipeline-node">
+            <div class="pipeline-dot dot-blue"></div>
+            <div class="pipeline-label">Backtest</div>
+            <div class="pipeline-desc">Executes on historical data without runtime errors</div>
           </div>
-          <div class="pipeline-arrow hidden md:flex">&rarr;</div>
-          <div class="pipeline-step">
-            <div class="pipeline-icon bg-amber-100 text-amber-700">3</div>
-            <h3 class="font-semibold mt-3">Trade</h3>
-            <p class="text-sm text-gray-500 mt-1">Strategy places at least one trade on historical data.</p>
+          <div class="pipeline-connector"></div>
+          <div class="pipeline-node">
+            <div class="pipeline-dot dot-amber"></div>
+            <div class="pipeline-label">Trade</div>
+            <div class="pipeline-desc">Places at least one trade on historical data</div>
           </div>
-          <div class="pipeline-arrow hidden md:flex">&rarr;</div>
-          <div class="pipeline-step">
-            <div class="pipeline-icon bg-purple-100 text-purple-700">4</div>
-            <h3 class="font-semibold mt-3">Judge</h3>
-            <p class="text-sm text-gray-500 mt-1">LLM judge confirms semantic alignment with the task description.</p>
+          <div class="pipeline-connector"></div>
+          <div class="pipeline-node">
+            <div class="pipeline-dot dot-purple"></div>
+            <div class="pipeline-label">Judge</div>
+            <div class="pipeline-desc">LLM judge confirms semantic alignment with the task</div>
           </div>
         </div>
       </div>
@@ -230,225 +230,16 @@
       </div>
     </section>
 
-    <!-- ERROR ANALYSIS -->
-    <section class="py-16 px-4" id="errors">
-      <div class="max-w-5xl mx-auto">
-        <h2 class="section-title">Error Analysis</h2>
-        <p class="section-subtitle">Where do models fail? Compilation is no longer the bottleneck.</p>
-        <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-          <div>
-            <h3 class="font-semibold text-lg mb-4">Failure Stage Distribution (Single-Turn)</h3>
-            <div class="chart-container">
-              <canvas id="chartFailureStage"></canvas>
-            </div>
-          </div>
-          <div>
-            <h3 class="font-semibold text-lg mb-4">Error Taxonomy</h3>
-            <table class="data-table w-full text-sm">
-              <thead>
-                <tr><th class="text-left">Error Type</th><th>%</th></tr>
-              </thead>
-              <tbody>
-                <tr><td>Signal conditions do not activate on data</td><td>17.8</td></tr>
-                <tr><td>__bool__ / Line object errors</td><td>13.1</td></tr>
-                <tr><td>Missing attribute/method</td><td>3.9</td></tr>
-                <tr><td>Wrong API params</td><td>3.9</td></tr>
-                <tr><td>Strategy doesn't match task</td><td>2.7</td></tr>
-                <tr><td>Type/NoneType errors</td><td>2.1</td></tr>
-                <tr><td>Other runtime errors</td><td>1.4</td></tr>
-                <tr><td>Syntax errors (runtime)</td><td>1.2</td></tr>
-                <tr><td>Index out of range</td><td>1.0</td></tr>
-                <tr><td>Compilation error</td><td>0.3</td></tr>
-                <tr><td>Execution timeout</td><td>0.2</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-          <div>
-            <h3 class="font-semibold text-lg mb-4">Agentic Final Outcomes</h3>
-            <table class="data-table w-full text-sm">
-              <thead>
-                <tr><th class="text-left">Outcome</th><th>%</th></tr>
-              </thead>
-              <tbody>
-                <tr><td>Success</td><td>81.8</td></tr>
-                <tr><td>Traded but judge rejected</td><td>5.6</td></tr>
-                <tr><td>Backtested but no trades</td><td>4.7</td></tr>
-                <tr><td>Compiled but backtest failed</td><td>7.9</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <div>
-            <h3 class="font-semibold text-lg mb-4">Error Type Shift (Turn 1 &rarr; Last Turn)</h3>
-            <table class="data-table w-full text-sm">
-              <thead>
-                <tr><th class="text-left">Error Type</th><th>Turn 1</th><th>Last</th><th class="text-left">Trend</th></tr>
-              </thead>
-              <tbody>
-                <tr><td>__bool__ / Line object</td><td>19.6%</td><td>28.9%</td><td class="text-left text-red-600 text-xs">grows</td></tr>
-                <tr><td>Strategy doesn't match task</td><td>9.5%</td><td>23.7%</td><td class="text-left text-red-600 text-xs">grows</td></tr>
-                <tr><td>Signal conditions don't activate</td><td>25.8%</td><td>23.7%</td><td class="text-left text-gray-500 text-xs">stable</td></tr>
-                <tr><td>Compilation fail</td><td>23.1%</td><td>6.2%</td><td class="text-left text-green-600 text-xs">drops</td></tr>
-                <tr><td>Wrong API params</td><td>7.8%</td><td>6.6%</td><td class="text-left text-green-600 text-xs">slight drop</td></tr>
-                <tr><td>Missing attribute/method</td><td>6.7%</td><td>3.3%</td><td class="text-left text-green-600 text-xs">drops</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- KEY FINDINGS -->
-    <section class="py-16 px-4 bg-gray-50" id="findings">
-      <div class="max-w-4xl mx-auto">
-        <h2 class="section-title">Key Findings</h2>
-        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="finding-card">
-            <div class="finding-number">1</div>
-            <h3 class="font-semibold text-lg">Syntax is Solved</h3>
-            <p class="text-sm text-gray-600 mt-2">Frontier models achieve near-perfect compilation rates. The challenge has shifted to operational formalization of trading logic.</p>
-          </div>
-          <div class="finding-card">
-            <div class="finding-number">2</div>
-            <h3 class="font-semibold text-lg">Agentic Feedback Helps</h3>
-            <p class="text-sm text-gray-600 mt-2">Best models jump from ~70-76% to 95-98% Judge Pass with iterative feedback, showing most errors are locally repairable.</p>
-          </div>
-          <div class="finding-card">
-            <div class="finding-number">3</div>
-            <h3 class="font-semibold text-lg">Specification Quality Matters</h3>
-            <p class="text-sm text-gray-600 mt-2">Vague descriptions are harder for models than formal, parameterized ones, even when the latter are conceptually more complex.</p>
-          </div>
-          <div class="finding-card">
-            <div class="finding-number">4</div>
-            <h3 class="font-semibold text-lg">General &gt; Specialized</h3>
-            <p class="text-sm text-gray-600 mt-2">General-purpose models with strong instruction-following often outperform code-specialized models on domain-specific strategy generation.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- EXAMPLE TASKS -->
-    <section class="py-16 px-4" id="examples">
-      <div class="max-w-4xl mx-auto">
-        <h2 class="section-title">Example Tasks</h2>
-        <p class="section-subtitle">Representative examples from each difficulty level.</p>
-        <div class="mt-8 space-y-4">
-
-          <div class="accordion">
-            <button class="accordion-header" onclick="toggleAccordion(this)">
-              <span><span class="difficulty-badge easy">Easy</span> Calendar-Based Monthly Strategy</span>
-              <svg class="accordion-chevron w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
-            </button>
-            <div class="accordion-body">
-              <p class="text-xs text-gray-400 mb-3">Source: StackExchange</p>
-              <p class="mb-3">Calendar-based monthly strategy for <code>SPY</code> on daily data over a five-year backtest window.</p>
-              <div class="task-detail">
-                <h4>Indicator setup:</h4>
-                <ul>
-                  <li>No technical indicators are used.</li>
-                  <li>Signals are triggered only by the calendar event marking the first trading day of each month.</li>
-                </ul>
-                <h4>Entry rule:</h4>
-                <ul><li>Open a long position on the first trading day of each month, regardless of price action.</li></ul>
-                <h4>Exit rule:</h4>
-                <ul><li>Close all open positions on the last trading day of the month.</li></ul>
-                <h4>Risk management:</h4>
-                <ul>
-                  <li>Position size is 100% of available capital with a fixed initial capital of $1000.</li>
-                  <li>The strategy reports the initial and final portfolio value after backtesting.</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion">
-            <button class="accordion-header" onclick="toggleAccordion(this)">
-              <span><span class="difficulty-badge medium">Medium</span> SOFI Mean Reversion with Intraday Pullback</span>
-              <svg class="accordion-chevron w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
-            </button>
-            <div class="accordion-body">
-              <p class="text-xs text-gray-400 mb-3">Source: Reddit</p>
-              <p class="mb-3"><code>SOFI</code> mean reversion with intraday pullback or flag-pattern entries on the 15-minute timeframe.</p>
-              <div class="task-detail">
-                <h4>Indicator setup:</h4>
-                <ul>
-                  <li>Use <code>EMA(10)</code> and <code>EMA(20)</code> as short- and medium-term trend filters.</li>
-                  <li>Use a volatility-sensitive filter based on <code>VRVP</code>.</li>
-                  <li>Restrict entries to cases where price trades within 1% of the 52-week high.</li>
-                </ul>
-                <h4>Entry rules:</h4>
-                <ul>
-                  <li>Enter long on a pullback to a gap-fill level or to a rising intraday EMA, followed by an upward reversal.</li>
-                  <li>Alternatively, skip the initial move and enter on a breakout from a 15-minute flag pattern in the direction of the main trend.</li>
-                </ul>
-                <h4>Exit rules:</h4>
-                <ul>
-                  <li>Close the position at a local stop-loss level or with a default stop of roughly 1&ndash;2% from entry.</li>
-                  <li>Take profit at the 52-week high or at a default target of roughly 3&ndash;5%.</li>
-                  <li>Exit if price closes the day below the 10- or 20-day EMA.</li>
-                </ul>
-                <h4>Risk management and filters:</h4>
-                <ul>
-                  <li>Size the trade so that risk per position remains within 1&ndash;2% of total capital.</li>
-                  <li>Avoid chasing the initial gap move; prefer asymmetric entries after retracement or consolidation.</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion">
-            <button class="accordion-header" onclick="toggleAccordion(this)">
-              <span><span class="difficulty-badge hard">Hard</span> One-Minute Scalping Strategy for SNAP</span>
-              <svg class="accordion-chevron w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
-            </button>
-            <div class="accordion-body">
-              <p class="text-xs text-gray-400 mb-3">Source: GitHub</p>
-              <p class="mb-3">One-minute scalping strategy for <code>SNAP</code> using momentum, liquidity, and volatility filters.</p>
-              <div class="task-detail">
-                <h4>Indicator construction:</h4>
-                <ul>
-                  <li>Use <code>Stochastic(5,3,3)</code> as a proxy for buyer/seller pressure and <code>CrossOver(%K, %D)</code> as the trigger.</li>
-                  <li>Use <code>RSI(3)</code> for micro-momentum confirmation.</li>
-                  <li>Use <code>SMA(volume, 20)</code> as a liquidity filter and <code>ATR(14)</code> with a threshold of 0.03 as a volatility filter.</li>
-                </ul>
-                <h4>Entry logic:</h4>
-                <ul>
-                  <li>Enter long when <code>%K</code> crosses above <code>%D</code>, <code>%K &gt; 80</code>, <code>RSI(3) &gt; 55</code>, current volume exceeds 1.2 &times; <code>SMA(volume, 20)</code>, and <code>ATR(14) &ge; 0.03</code>.</li>
-                  <li>Enter short under the mirrored conditions: downward crossover, <code>%K &lt; 20</code>, <code>RSI(3) &lt; 45</code>, sufficient volume, and the same ATR filter.</li>
-                </ul>
-                <h4>Exit logic:</h4>
-                <ul>
-                  <li>Use a take-profit of $0.01 from entry and a stop-loss of $0.02.</li>
-                  <li>Close on signal reversal or after a timeout of three bars.</li>
-                </ul>
-                <h4>Implementation constraints:</h4>
-                <ul>
-                  <li>Limit position size to 100&ndash;500 shares, with 100 shares as the default.</li>
-                  <li>Trade only during the main session, skip the first three minutes, and require sufficient rolling volume; an optional $25,000 balance filter may be applied for PDT compliance.</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
     <!-- CITATION -->
     <section class="py-16 px-4 bg-gray-50" id="citation">
       <div class="max-w-3xl mx-auto">
         <h2 class="section-title">Citation</h2>
         <div class="mt-6 relative">
-          <pre class="bibtex-block"><code>@article{khoroshilov2025quantcodebench,
-    title={QuantCode-Bench: A Benchmark for Evaluating the Ability
-           of Large Language Models to Generate Executable
-           Algorithmic Trading Strategies},
-    author={Khoroshilov, Alexey and Chernysh, Alexey and
-            Ekhtibarov, Orkhan and Kamkia, Nini and
-            Zmitrovich, Dmitry},
-    year={2025}
+          <pre class="bibtex-block"><code>@article{khoroshilov2026quantcodebench,
+  title={QuantCode-Bench: A Benchmark for Evaluating the Ability of Large Language Models to Generate Executable Algorithmic Trading Strategies},
+  author={Khoroshilov Alexey and Chernysh Alexey and Ekhtibarov Orkhan and Kamkia Nini and Zmitrovich Dmitry},
+  year={2026},
+  url={https://github.com/LimexAILab/QuantCode-Bench}
 }</code></pre>
           <button onclick="copyBibtex()" class="absolute top-3 right-3 text-xs bg-white border border-gray-300 rounded px-2 py-1 hover:bg-gray-100 transition" title="Copy to clipboard">Copy</button>
         </div>
@@ -459,7 +250,7 @@
 
   <!-- ===== FOOTER ===== -->
   <footer class="py-8 border-t border-gray-200 text-center text-sm text-gray-400 px-4">
-    <p>QuantCode-Bench &middot; Lime &middot; 2025</p>
+    <p>QuantCode-Bench &middot; Lime &middot; 2026</p>
     <p class="mt-2">
       Related:
       <a href="https://livecodebench.github.io/" target="_blank" class="hover:text-blue-500">LiveCodeBench</a> &middot;

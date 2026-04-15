@@ -224,30 +224,6 @@ function initCharts() {
     }
   });
 
-  // Failure stage pie chart
-  new Chart(document.getElementById('chartFailureStage'), {
-    type: 'doughnut',
-    data: {
-      labels: ['Success', 'Judge Rejected', 'No Trades', 'Backtest Fail', 'Compilation Fail', 'Empty Response (API)'],
-      datasets: [{
-        data: [48.2, 2.7, 17.8, 26.8, 0.3, 4.2],
-        backgroundColor: ['#10b981', '#8b5cf6', '#f59e0b', '#ef4444', '#6b7280', '#06b6d4'],
-        borderWidth: 2,
-        borderColor: '#fff',
-      }]
-    },
-    options: {
-      cutout: '55%',
-      plugins: {
-        legend: { position: 'bottom', labels: { padding: 16 } },
-        tooltip: {
-          callbacks: {
-            label: ctx => `${ctx.label}: ${ctx.parsed}%`
-          }
-        }
-      }
-    }
-  });
 }
 
 /* ===== Init ===== */
