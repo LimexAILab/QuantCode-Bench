@@ -69,29 +69,32 @@
       <div class="max-w-4xl mx-auto">
         <h2 class="section-title">Evaluation Pipeline</h2>
         <p class="section-subtitle">A strategy is counted as successful only if it passes all four stages sequentially.</p>
-        <div class="mt-10 pipeline-horizontal">
-          <div class="pipeline-node">
-            <div class="pipeline-dot dot-emerald"></div>
-            <div class="pipeline-label">Compilation</div>
-            <div class="pipeline-desc">Syntactically correct, no interpretation errors</div>
+        <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-0">
+          <div class="flex flex-col items-center text-center" style="width:160px">
+            <div class="w-4 h-4 min-w-[16px] min-h-[16px] rounded-full bg-emerald-500"></div>
+            <div class="font-semibold text-gray-900 mt-3 text-sm">Compilation</div>
+            <div class="text-xs text-gray-500 mt-1 max-w-[150px] leading-snug">Syntactically correct, no interpretation errors</div>
           </div>
-          <div class="pipeline-connector"></div>
-          <div class="pipeline-node">
-            <div class="pipeline-dot dot-blue"></div>
-            <div class="pipeline-label">Backtest</div>
-            <div class="pipeline-desc">Executes on historical data without runtime errors</div>
+          <div class="hidden sm:block w-12 shrink-0" style="height:2px;background:#d1d5db;margin-top:8px"></div>
+          <div class="block sm:hidden shrink-0" style="width:2px;height:24px;background:#d1d5db"></div>
+          <div class="flex flex-col items-center text-center" style="width:160px">
+            <div class="w-4 h-4 min-w-[16px] min-h-[16px] rounded-full bg-blue-500"></div>
+            <div class="font-semibold text-gray-900 mt-3 text-sm">Backtest</div>
+            <div class="text-xs text-gray-500 mt-1 max-w-[150px] leading-snug">Executes on historical data without runtime errors</div>
           </div>
-          <div class="pipeline-connector"></div>
-          <div class="pipeline-node">
-            <div class="pipeline-dot dot-amber"></div>
-            <div class="pipeline-label">Trade</div>
-            <div class="pipeline-desc">Places at least one trade on historical data</div>
+          <div class="hidden sm:block w-12 shrink-0" style="height:2px;background:#d1d5db;margin-top:8px"></div>
+          <div class="block sm:hidden shrink-0" style="width:2px;height:24px;background:#d1d5db"></div>
+          <div class="flex flex-col items-center text-center" style="width:160px">
+            <div class="w-4 h-4 min-w-[16px] min-h-[16px] rounded-full bg-amber-500"></div>
+            <div class="font-semibold text-gray-900 mt-3 text-sm">Trade</div>
+            <div class="text-xs text-gray-500 mt-1 max-w-[150px] leading-snug">Places at least one trade on historical data</div>
           </div>
-          <div class="pipeline-connector"></div>
-          <div class="pipeline-node">
-            <div class="pipeline-dot dot-purple"></div>
-            <div class="pipeline-label">Judge</div>
-            <div class="pipeline-desc">LLM judge confirms semantic alignment with the task</div>
+          <div class="hidden sm:block w-12 shrink-0" style="height:2px;background:#d1d5db;margin-top:8px"></div>
+          <div class="block sm:hidden shrink-0" style="width:2px;height:24px;background:#d1d5db"></div>
+          <div class="flex flex-col items-center text-center" style="width:160px">
+            <div class="w-4 h-4 min-w-[16px] min-h-[16px] rounded-full bg-purple-500"></div>
+            <div class="font-semibold text-gray-900 mt-3 text-sm">Judge</div>
+            <div class="text-xs text-gray-500 mt-1 max-w-[150px] leading-snug">LLM judge confirms semantic alignment with the task</div>
           </div>
         </div>
       </div>

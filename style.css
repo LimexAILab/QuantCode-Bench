@@ -73,73 +73,7 @@ body {
 }
 
 /* ===== Pipeline ===== */
-.pipeline-horizontal {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 0;
-}
-
-.pipeline-node {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  flex: 0 1 160px;
-}
-
-.pipeline-dot {
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-.dot-emerald { background: #10b981; }
-.dot-blue { background: #3b82f6; }
-.dot-amber { background: #f59e0b; }
-.dot-purple { background: #8b5cf6; }
-
-.pipeline-label {
-  font-weight: 600;
-  font-size: 0.95rem;
-  margin-top: 0.75rem;
-  color: #111827;
-}
-
-.pipeline-desc {
-  font-size: 0.8rem;
-  color: #6b7280;
-  margin-top: 0.25rem;
-  line-height: 1.4;
-  max-width: 150px;
-}
-
-.pipeline-connector {
-  flex-shrink: 0;
-  width: 48px;
-  height: 2px;
-  background: #d1d5db;
-  margin-top: 6px;
-}
-
-@media (max-width: 640px) {
-  .pipeline-horizontal {
-    flex-direction: column;
-    align-items: center;
-    gap: 0;
-  }
-  .pipeline-connector {
-    width: 2px;
-    height: 24px;
-    margin-top: 0;
-  }
-  .pipeline-node {
-    flex: none;
-  }
-  .pipeline-desc {
-    max-width: 220px;
-  }
-}
+/* Pipeline layout uses Tailwind classes inline */
 
 /* ===== Data Tables ===== */
 .data-table {
