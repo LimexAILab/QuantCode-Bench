@@ -1,0 +1,298 @@
+/* ===== Base ===== */
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===== Buttons ===== */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1.2rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #fff;
+  background: #2563eb;
+  border-radius: 0.5rem;
+  transition: background 0.15s;
+}
+.btn-primary:hover { background: #1d4ed8; }
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1.2rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  background: #fff;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  transition: all 0.15s;
+}
+.btn-secondary:hover { border-color: #2563eb; color: #2563eb; }
+
+/* ===== Bench Tabs ===== */
+.bench-tab {
+  padding: 0.35rem 0.9rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #6b7280;
+  border-radius: 9999px;
+  border: 1px solid transparent;
+  transition: all 0.15s;
+  cursor: pointer;
+  background: transparent;
+}
+.bench-tab:hover { color: #111827; }
+.bench-tab.active {
+  color: #2563eb;
+  background: #eff6ff;
+  border-color: #bfdbfe;
+}
+
+.bench-content { display: none; }
+.bench-content.active { display: block; }
+
+/* ===== Section Titles ===== */
+.section-title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  text-align: center;
+  color: #111827;
+}
+.section-subtitle {
+  margin-top: 0.5rem;
+  text-align: center;
+  color: #6b7280;
+  max-width: 40rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ===== Pipeline ===== */
+.pipeline-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+  align-items: flex-start;
+  gap: 0;
+}
+@media (max-width: 767px) {
+  .pipeline-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+.pipeline-step {
+  text-align: center;
+  padding: 0 0.5rem;
+}
+
+.pipeline-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.75rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.pipeline-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: #9ca3af;
+  padding-top: 0.75rem;
+}
+
+/* ===== Data Tables ===== */
+.data-table {
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+.data-table thead th {
+  padding: 0.6rem 0.75rem;
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  border-bottom: 2px solid #e5e7eb;
+  text-align: center;
+  white-space: nowrap;
+  user-select: none;
+}
+.data-table thead th.text-left { text-align: left; }
+
+.data-table tbody td {
+  padding: 0.55rem 0.75rem;
+  border-bottom: 1px solid #f3f4f6;
+  text-align: center;
+  white-space: nowrap;
+}
+.data-table tbody td:first-child {
+  text-align: center;
+  color: #9ca3af;
+  font-size: 0.8rem;
+  width: 2rem;
+}
+.data-table tbody td:nth-child(2) { text-align: left; font-weight: 500; }
+
+.data-table tbody tr:hover { background: #f9fafb; }
+
+.data-table tbody tr:nth-child(1) td:nth-child(2) { color: #b45309; }
+.data-table tbody tr:nth-child(2) td:nth-child(2) { color: #6b7280; }
+.data-table tbody tr:nth-child(3) td:nth-child(2) { color: #92400e; }
+
+.sortable-col { cursor: pointer; }
+.sortable-col:hover { color: #2563eb; }
+.sort-indicator {
+  font-size: 0.65rem;
+  vertical-align: middle;
+  opacity: 0.5;
+}
+
+/* ===== Charts ===== */
+.chart-container {
+  position: relative;
+  max-width: 400px;
+  margin: 0 auto;
+}
+.chart-container-wide {
+  position: relative;
+  max-width: 100%;
+  height: 380px;
+}
+
+/* ===== Finding Cards ===== */
+.finding-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  position: relative;
+}
+.finding-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  font-weight: 700;
+  background: #eff6ff;
+  color: #2563eb;
+  margin-bottom: 0.5rem;
+}
+
+/* ===== Accordion ===== */
+.accordion {
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background: #fff;
+}
+.accordion-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1rem 1.25rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  border: none;
+  transition: background 0.15s;
+}
+.accordion-header:hover { background: #f9fafb; }
+
+.accordion-chevron {
+  transition: transform 0.2s;
+  flex-shrink: 0;
+  color: #9ca3af;
+}
+.accordion.open .accordion-chevron { transform: rotate(180deg); }
+
+.accordion-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+  padding: 0 1.25rem;
+}
+.accordion.open .accordion-body {
+  max-height: 600px;
+  padding: 0 1.25rem 1.25rem;
+}
+
+/* ===== Difficulty Badges ===== */
+.difficulty-badge {
+  display: inline-block;
+  padding: 0.15rem 0.55rem;
+  border-radius: 9999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-right: 0.4rem;
+  vertical-align: middle;
+}
+.difficulty-badge.easy { background: #d1fae5; color: #065f46; }
+.difficulty-badge.medium { background: #fef3c7; color: #92400e; }
+.difficulty-badge.hard { background: #fee2e2; color: #991b1b; }
+
+/* ===== Task Detail Boxes ===== */
+.task-detail {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+.task-detail h4 {
+  font-weight: 600;
+  margin-top: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+.task-detail h4:first-child { margin-top: 0; }
+.task-detail ul, .task-detail ol {
+  margin-left: 1.25rem;
+  margin-bottom: 0.25rem;
+}
+.task-detail ul { list-style: disc; }
+.task-detail ol { list-style: decimal; }
+.task-detail code {
+  background: #e5e7eb;
+  padding: 0.1rem 0.35rem;
+  border-radius: 0.25rem;
+  font-size: 0.8rem;
+}
+
+/* ===== BibTeX ===== */
+.bibtex-block {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  padding: 1rem 1.25rem;
+  font-size: 0.8rem;
+  line-height: 1.7;
+  overflow-x: auto;
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+}
+
+/* ===== Scroll smooth ===== */
+html { scroll-behavior: smooth; }
+
+/* ===== Medal colors for rank column ===== */
+.rank-gold { color: #d97706; font-weight: 700; }
+.rank-silver { color: #6b7280; font-weight: 700; }
+.rank-bronze { color: #b45309; font-weight: 700; }

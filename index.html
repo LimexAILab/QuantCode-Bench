@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuantCode-Bench</title>
+  <meta name="description" content="QuantCode-Bench: A Benchmark for Evaluating LLMs on Executable Algorithmic Trading Strategies">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-white text-gray-900 font-sans">
+
+  <!-- ===== HEADER ===== -->
+  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-gray-200">
+    <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="#" class="text-xl font-bold text-gray-900 tracking-tight">QuantCode-Bench</a>
+      <nav class="hidden md:flex items-center gap-1" id="benchTabs">
+        <button class="bench-tab active" data-bench="quantcode-bench">QuantCode-Bench</button>
+      </nav>
+      <div class="flex items-center gap-3">
+        <a href="#results-single" class="text-sm text-gray-600 hover:text-blue-600 transition hidden md:inline">Leaderboard</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== BENCHMARK: QuantCode-Bench ===== -->
+  <div class="bench-content active" id="bench-quantcode-bench">
+
+    <!-- HERO -->
+    <section class="pt-16 pb-12 text-center px-4">
+      <h1 class="text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight max-w-4xl mx-auto">
+        QuantCode-Bench: A Benchmark for Evaluating the Ability of Large Language Models to Generate
+        <span class="text-blue-600">Executable Algorithmic Trading Strategies</span>
+      </h1>
+      <p class="mt-6 text-gray-500 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+        <span class="text-gray-800 font-medium">Alexey Khoroshilov</span>,
+        <span class="text-gray-800 font-medium">Alexey Chernysh</span>,
+        <span class="text-gray-800 font-medium">Orkhan Ekhtibarov</span>,
+        <span class="text-gray-800 font-medium">Nini Kamkia</span>,
+        <span class="text-gray-800 font-medium">Dmitry Zmitrovich</span>
+      </p>
+      <p class="mt-1 text-gray-400 text-sm">Lime</p>
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+        <a href="#" class="btn-primary"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg> Paper</a>
+        <a href="https://github.com/LimexAILab/QuantCode-Bench" target="_blank" class="btn-secondary"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg> Code</a>
+        <a href="#" class="btn-secondary"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 7v10c0 2 1 3 3 3h10c2 0 3-1 3-3V7c0-2-1-3-3-3H7C5 4 4 5 4 7zm0 5h16"/></svg> Data</a>
+        <a href="#results-single" class="btn-secondary"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6m8 0V5a2 2 0 012-2h2a2 2 0 012 2v14m8 0v-4a2 2 0 00-2-2h-2a2 2 0 00-2 2v4"/></svg> Leaderboard</a>
+      </div>
+    </section>
+
+    <!-- OVERVIEW -->
+    <section class="py-12 bg-gray-50" id="overview">
+      <div class="max-w-4xl mx-auto px-4">
+        <p class="text-lg text-gray-700 leading-relaxed text-center max-w-3xl mx-auto">
+          <strong>QuantCode-Bench</strong> evaluates modern LLMs on their ability to generate executable
+          algorithmic trading strategies for the <strong>Backtrader</strong> framework from natural-language
+          descriptions. The benchmark contains <strong>400 tasks</strong> of varying difficulty collected from
+          Reddit, TradingView, StackExchange, GitHub, and synthetic sources. Models are evaluated through a
+          <strong>four-stage pipeline</strong> in both <strong>single-turn</strong> and <strong>agentic multi-turn</strong> settings.
+        </p>
+      </div>
+    </section>
+
+    <!-- EVALUATION PIPELINE -->
+    <section class="py-16 px-4" id="pipeline">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="section-title">Evaluation Pipeline</h2>
+        <p class="section-subtitle">A strategy is counted as successful only if it passes all four stages sequentially.</p>
+        <div class="mt-10 grid grid-cols-1 md:grid-cols-4 gap-0 items-start pipeline-grid">
+          <div class="pipeline-step">
+            <div class="pipeline-icon bg-emerald-100 text-emerald-700">1</div>
+            <h3 class="font-semibold mt-3">Compilation</h3>
+            <p class="text-sm text-gray-500 mt-1">Code is syntactically correct and can be interpreted without errors.</p>
+          </div>
+          <div class="pipeline-arrow hidden md:flex">&rarr;</div>
+          <div class="pipeline-step">
+            <div class="pipeline-icon bg-blue-100 text-blue-700">2</div>
+            <h3 class="font-semibold mt-3">Backtest</h3>
+            <p class="text-sm text-gray-500 mt-1">Strategy executes on historical market data spanning diverse assets and timeframes without runtime errors.</p>
+          </div>
+          <div class="pipeline-arrow hidden md:flex">&rarr;</div>
+          <div class="pipeline-step">
+            <div class="pipeline-icon bg-amber-100 text-amber-700">3</div>
+            <h3 class="font-semibold mt-3">Trade</h3>
+            <p class="text-sm text-gray-500 mt-1">Strategy places at least one trade on historical data.</p>
+          </div>
+          <div class="pipeline-arrow hidden md:flex">&rarr;</div>
+          <div class="pipeline-step">
+            <div class="pipeline-icon bg-purple-100 text-purple-700">4</div>
+            <h3 class="font-semibold mt-3">Judge</h3>
+            <p class="text-sm text-gray-500 mt-1">LLM judge confirms semantic alignment with the task description.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DATASET -->
+    <section class="py-16 px-4 bg-gray-50" id="dataset">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="section-title">Dataset</h2>
+        <p class="section-subtitle">400 trading-strategy generation tasks from diverse sources and difficulty levels.</p>
+        <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div>
+            <h3 class="font-semibold text-lg mb-4">Source Distribution</h3>
+            <div class="chart-container">
+              <canvas id="chartSources"></canvas>
+            </div>
+          </div>
+          <div>
+            <h3 class="font-semibold text-lg mb-4">Difficulty Distribution</h3>
+            <table class="data-table w-full">
+              <thead>
+                <tr>
+                  <th>Source</th><th>Easy</th><th>Medium</th><th>Hard</th><th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Reddit</td><td>147</td><td>16</td><td>20</td><td class="font-semibold">183</td></tr>
+                <tr><td>TradingView</td><td>6</td><td>57</td><td>37</td><td class="font-semibold">100</td></tr>
+                <tr><td>StackExchange</td><td>32</td><td>34</td><td>24</td><td class="font-semibold">90</td></tr>
+                <tr><td>GitHub</td><td>12</td><td>1</td><td>6</td><td class="font-semibold">19</td></tr>
+                <tr><td>Synthetic</td><td>0</td><td>8</td><td>0</td><td class="font-semibold">8</td></tr>
+                <tr class="font-bold border-t-2 border-gray-300"><td>Total</td><td>197</td><td>116</td><td>87</td><td>400</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESULTS: SINGLE-TURN -->
+    <section class="py-16 px-4" id="results-single">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="section-title">Single-Turn Results</h2>
+        <p class="section-subtitle">Model must generate a correct strategy on the first attempt. Click column headers to sort.</p>
+        <div class="mt-8 overflow-x-auto">
+          <table class="data-table w-full sortable" id="tableSingle">
+            <thead>
+              <tr>
+                <th class="text-left">#</th>
+                <th class="text-left sortable-col" data-col="0">Model</th>
+                <th class="sortable-col" data-col="1">Compilation, %</th>
+                <th class="sortable-col" data-col="2">Backtest, %</th>
+                <th class="sortable-col" data-col="3">Trade, %</th>
+                <th class="sortable-col" data-col="4">Judge, % <span class="sort-indicator">&#9660;</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td></td><td>claude-opus-4.6</td><td>100.0</td><td>98.2</td><td>77.2</td><td class="font-semibold">75.8</td></tr>
+              <tr><td></td><td>gpt-5.4</td><td>100.0</td><td>95.5</td><td>72.0</td><td class="font-semibold">70.2</td></tr>
+              <tr><td></td><td>claude-sonnet-4.5</td><td>100.0</td><td>91.5</td><td>71.2</td><td class="font-semibold">69.8</td></tr>
+              <tr><td></td><td>gpt-5.2-codex</td><td>100.0</td><td>94.5</td><td>74.5</td><td class="font-semibold">67.5</td></tr>
+              <tr><td></td><td>glm-5</td><td>100.0</td><td>92.4</td><td>70.3</td><td class="font-semibold">65.4</td></tr>
+              <tr><td></td><td>claude-sonnet-4.6</td><td>100.0</td><td>85.8</td><td>66.2</td><td class="font-semibold">65.0</td></tr>
+              <tr><td></td><td>kimi-k2.5</td><td>99.7</td><td>87.3</td><td>67.5</td><td class="font-semibold">64.8</td></tr>
+              <tr><td></td><td>gemini-3-flash</td><td>100.0</td><td>76.0</td><td>63.2</td><td class="font-semibold">59.8</td></tr>
+              <tr><td></td><td>grok-4.1-fast</td><td>99.2</td><td>70.2</td><td>56.1</td><td class="font-semibold">48.9</td></tr>
+              <tr><td></td><td>deepseek-v3.2</td><td>100.0</td><td>75.8</td><td>50.0</td><td class="font-semibold">48.8</td></tr>
+              <tr><td></td><td>qwen3-235b</td><td>100.0</td><td>72.5</td><td>49.0</td><td class="font-semibold">48.2</td></tr>
+              <tr><td></td><td>qwen3-coder-30b</td><td>100.0</td><td>59.0</td><td>40.5</td><td class="font-semibold">39.2</td></tr>
+              <tr><td></td><td>gemini-2.5-flash</td><td>99.5</td><td>49.2</td><td>33.2</td><td class="font-semibold">31.2</td></tr>
+              <tr><td></td><td>qwen3-14b</td><td>98.0</td><td>42.2</td><td>27.8</td><td class="font-semibold">25.2</td></tr>
+              <tr><td></td><td>qwen3-8b</td><td>99.5</td><td>31.8</td><td>19.8</td><td class="font-semibold">18.5</td></tr>
+              <tr><td></td><td>qwen3-4b</td><td>98.8</td><td>24.6</td><td>16.4</td><td class="font-semibold">12.3</td></tr>
+              <tr><td></td><td>qwen3-1.7b</td><td>98.1</td><td>23.1</td><td>13.7</td><td class="font-semibold">7.8</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="mt-10">
+          <h3 class="font-semibold text-lg mb-4">Judge Pass Rate (Single-Turn)</h3>
+          <div class="chart-container-wide">
+            <canvas id="chartSingleJudge"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESULTS: AGENTIC MULTI-TURN -->
+    <section class="py-16 px-4 bg-gray-50" id="results-agentic">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="section-title">Agentic Multi-Turn Results</h2>
+        <p class="section-subtitle">Model receives structured feedback and may repair errors across up to 10 turns.</p>
+        <div class="mt-8 overflow-x-auto">
+          <table class="data-table w-full sortable" id="tableAgentic">
+            <thead>
+              <tr>
+                <th class="text-left">#</th>
+                <th class="text-left sortable-col" data-col="0">Model</th>
+                <th class="sortable-col" data-col="1">Comp. %</th>
+                <th class="sortable-col" data-col="2">Backtest %</th>
+                <th class="sortable-col" data-col="3">Trade %</th>
+                <th class="sortable-col" data-col="4">Judge % <span class="sort-indicator">&#9660;</span></th>
+                <th class="sortable-col" data-col="5">AvgT</th>
+                <th class="sortable-col" data-col="6">T1</th>
+                <th class="sortable-col" data-col="7">T3</th>
+                <th class="sortable-col" data-col="8">T5</th>
+                <th class="sortable-col" data-col="9">T10</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td></td><td>claude-opus-4.6</td><td>100.0</td><td>100.0</td><td>100.0</td><td class="font-semibold">97.5</td><td>1.5</td><td>75.8</td><td>95.2</td><td>97.5</td><td>97.5</td></tr>
+              <tr><td></td><td>claude-sonnet-4.6</td><td>100.0</td><td>99.8</td><td>99.8</td><td class="font-semibold">96.0</td><td>2.0</td><td>65.0</td><td>90.2</td><td>93.8</td><td>96.0</td></tr>
+              <tr><td></td><td>gpt-5.4</td><td>100.0</td><td>99.8</td><td>98.2</td><td class="font-semibold">95.0</td><td>1.9</td><td>70.2</td><td>91.5</td><td>93.2</td><td>95.0</td></tr>
+              <tr><td></td><td>kimi-k2.5</td><td>100.0</td><td>100.0</td><td>98.8</td><td class="font-semibold">93.5</td><td>2.3</td><td>64.8</td><td>84.2</td><td>89.2</td><td>93.5</td></tr>
+              <tr><td></td><td>claude-sonnet-4.5</td><td>100.0</td><td>100.0</td><td>99.5</td><td class="font-semibold">93.0</td><td>2.0</td><td>69.8</td><td>90.0</td><td>91.2</td><td>93.0</td></tr>
+              <tr><td></td><td>gemini-3-flash</td><td>100.0</td><td>97.5</td><td>94.5</td><td class="font-semibold">91.8</td><td>2.4</td><td>59.8</td><td>83.5</td><td>88.2</td><td>91.8</td></tr>
+              <tr><td></td><td>glm-5</td><td>100.0</td><td>99.5</td><td>95.8</td><td class="font-semibold">90.8</td><td>2.4</td><td>65.4</td><td>83.2</td><td>88.2</td><td>90.8</td></tr>
+              <tr><td></td><td>gpt-5.2-codex</td><td>100.0</td><td>100.0</td><td>99.8</td><td class="font-semibold">89.8</td><td>2.4</td><td>67.5</td><td>84.2</td><td>88.2</td><td>89.8</td></tr>
+              <tr><td></td><td>qwen3-235b</td><td>100.0</td><td>98.2</td><td>93.8</td><td class="font-semibold">87.2</td><td>3.1</td><td>48.2</td><td>74.0</td><td>81.2</td><td>87.2</td></tr>
+              <tr><td></td><td>grok-4.1-fast</td><td>100.0</td><td>97.0</td><td>92.2</td><td class="font-semibold">84.5</td><td>3.2</td><td>48.9</td><td>74.5</td><td>79.2</td><td>84.5</td></tr>
+              <tr><td></td><td>deepseek-v3.2</td><td>100.0</td><td>97.2</td><td>92.0</td><td class="font-semibold">83.8</td><td>3.1</td><td>48.8</td><td>75.5</td><td>80.0</td><td>83.8</td></tr>
+              <tr><td></td><td>qwen3-coder-30b</td><td>100.0</td><td>86.2</td><td>76.0</td><td class="font-semibold">68.0</td><td>4.7</td><td>39.2</td><td>57.0</td><td>61.8</td><td>68.0</td></tr>
+              <tr><td></td><td>qwen3-14b</td><td>100.0</td><td>83.2</td><td>67.0</td><td class="font-semibold">62.7</td><td>5.3</td><td>25.2</td><td>51.0</td><td>56.0</td><td>62.7</td></tr>
+              <tr><td></td><td>gemini-2.5-flash</td><td>100.0</td><td>79.8</td><td>65.2</td><td class="font-semibold">62.5</td><td>5.2</td><td>31.2</td><td>52.0</td><td>57.8</td><td>62.5</td></tr>
+              <tr><td></td><td>qwen3-8b</td><td>100.0</td><td>66.2</td><td>48.9</td><td class="font-semibold">47.6</td><td>6.5</td><td>18.5</td><td>30.9</td><td>40.2</td><td>47.6</td></tr>
+              <tr><td></td><td>qwen3-4b</td><td>98.1</td><td>52.5</td><td>41.9</td><td class="font-semibold">31.9</td><td>7.4</td><td>12.3</td><td>17.5</td><td>25.6</td><td>31.9</td></tr>
+              <tr><td></td><td>qwen3-1.7b</td><td>100.0</td><td>35.0</td><td>26.5</td><td class="font-semibold">14.2</td><td>9.2</td><td>7.8</td><td>8.1</td><td>9.2</td><td>14.2</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="mt-10">
+          <h3 class="font-semibold text-lg mb-4">Cumulative Success by Turn (Top Models)</h3>
+          <div class="chart-container-wide">
+            <canvas id="chartAgenticTurns"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ERROR ANALYSIS -->
+    <section class="py-16 px-4" id="errors">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="section-title">Error Analysis</h2>
+        <p class="section-subtitle">Where do models fail? Compilation is no longer the bottleneck.</p>
+        <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+          <div>
+            <h3 class="font-semibold text-lg mb-4">Failure Stage Distribution (Single-Turn)</h3>
+            <div class="chart-container">
+              <canvas id="chartFailureStage"></canvas>
+            </div>
+          </div>
+          <div>
+            <h3 class="font-semibold text-lg mb-4">Error Taxonomy</h3>
+            <table class="data-table w-full text-sm">
+              <thead>
+                <tr><th class="text-left">Error Type</th><th>%</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Signal conditions do not activate on data</td><td>17.8</td></tr>
+                <tr><td>__bool__ / Line object errors</td><td>13.1</td></tr>
+                <tr><td>Missing attribute/method</td><td>3.9</td></tr>
+                <tr><td>Wrong API params</td><td>3.9</td></tr>
+                <tr><td>Strategy doesn't match task</td><td>2.7</td></tr>
+                <tr><td>Type/NoneType errors</td><td>2.1</td></tr>
+                <tr><td>Other runtime errors</td><td>1.4</td></tr>
+                <tr><td>Syntax errors (runtime)</td><td>1.2</td></tr>
+                <tr><td>Index out of range</td><td>1.0</td></tr>
+                <tr><td>Compilation error</td><td>0.3</td></tr>
+                <tr><td>Execution timeout</td><td>0.2</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+          <div>
+            <h3 class="font-semibold text-lg mb-4">Agentic Final Outcomes</h3>
+            <table class="data-table w-full text-sm">
+              <thead>
+                <tr><th class="text-left">Outcome</th><th>%</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Success</td><td>81.8</td></tr>
+                <tr><td>Traded but judge rejected</td><td>5.6</td></tr>
+                <tr><td>Backtested but no trades</td><td>4.7</td></tr>
+                <tr><td>Compiled but backtest failed</td><td>7.9</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div>
+            <h3 class="font-semibold text-lg mb-4">Error Type Shift (Turn 1 &rarr; Last Turn)</h3>
+            <table class="data-table w-full text-sm">
+              <thead>
+                <tr><th class="text-left">Error Type</th><th>Turn 1</th><th>Last</th><th class="text-left">Trend</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>__bool__ / Line object</td><td>19.6%</td><td>28.9%</td><td class="text-left text-red-600 text-xs">grows</td></tr>
+                <tr><td>Strategy doesn't match task</td><td>9.5%</td><td>23.7%</td><td class="text-left text-red-600 text-xs">grows</td></tr>
+                <tr><td>Signal conditions don't activate</td><td>25.8%</td><td>23.7%</td><td class="text-left text-gray-500 text-xs">stable</td></tr>
+                <tr><td>Compilation fail</td><td>23.1%</td><td>6.2%</td><td class="text-left text-green-600 text-xs">drops</td></tr>
+                <tr><td>Wrong API params</td><td>7.8%</td><td>6.6%</td><td class="text-left text-green-600 text-xs">slight drop</td></tr>
+                <tr><td>Missing attribute/method</td><td>6.7%</td><td>3.3%</td><td class="text-left text-green-600 text-xs">drops</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- KEY FINDINGS -->
+    <section class="py-16 px-4 bg-gray-50" id="findings">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="section-title">Key Findings</h2>
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="finding-card">
+            <div class="finding-number">1</div>
+            <h3 class="font-semibold text-lg">Syntax is Solved</h3>
+            <p class="text-sm text-gray-600 mt-2">Frontier models achieve near-perfect compilation rates. The challenge has shifted to operational formalization of trading logic.</p>
+          </div>
+          <div class="finding-card">
+            <div class="finding-number">2</div>
+            <h3 class="font-semibold text-lg">Agentic Feedback Helps</h3>
+            <p class="text-sm text-gray-600 mt-2">Best models jump from ~70-76% to 95-98% Judge Pass with iterative feedback, showing most errors are locally repairable.</p>
+          </div>
+          <div class="finding-card">
+            <div class="finding-number">3</div>
+            <h3 class="font-semibold text-lg">Specification Quality Matters</h3>
+            <p class="text-sm text-gray-600 mt-2">Vague descriptions are harder for models than formal, parameterized ones, even when the latter are conceptually more complex.</p>
+          </div>
+          <div class="finding-card">
+            <div class="finding-number">4</div>
+            <h3 class="font-semibold text-lg">General &gt; Specialized</h3>
+            <p class="text-sm text-gray-600 mt-2">General-purpose models with strong instruction-following often outperform code-specialized models on domain-specific strategy generation.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXAMPLE TASKS -->
+    <section class="py-16 px-4" id="examples">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="section-title">Example Tasks</h2>
+        <p class="section-subtitle">Representative examples from each difficulty level.</p>
+        <div class="mt-8 space-y-4">
+
+          <div class="accordion">
+            <button class="accordion-header" onclick="toggleAccordion(this)">
+              <span><span class="difficulty-badge easy">Easy</span> Calendar-Based Monthly Strategy</span>
+              <svg class="accordion-chevron w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div class="accordion-body">
+              <p class="text-xs text-gray-400 mb-3">Source: StackExchange</p>
+              <p class="mb-3">Calendar-based monthly strategy for <code>SPY</code> on daily data over a five-year backtest window.</p>
+              <div class="task-detail">
+                <h4>Indicator setup:</h4>
+                <ul>
+                  <li>No technical indicators are used.</li>
+                  <li>Signals are triggered only by the calendar event marking the first trading day of each month.</li>
+                </ul>
+                <h4>Entry rule:</h4>
+                <ul><li>Open a long position on the first trading day of each month, regardless of price action.</li></ul>
+                <h4>Exit rule:</h4>
+                <ul><li>Close all open positions on the last trading day of the month.</li></ul>
+                <h4>Risk management:</h4>
+                <ul>
+                  <li>Position size is 100% of available capital with a fixed initial capital of $1000.</li>
+                  <li>The strategy reports the initial and final portfolio value after backtesting.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion">
+            <button class="accordion-header" onclick="toggleAccordion(this)">
+              <span><span class="difficulty-badge medium">Medium</span> SOFI Mean Reversion with Intraday Pullback</span>
+              <svg class="accordion-chevron w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div class="accordion-body">
+              <p class="text-xs text-gray-400 mb-3">Source: Reddit</p>
+              <p class="mb-3"><code>SOFI</code> mean reversion with intraday pullback or flag-pattern entries on the 15-minute timeframe.</p>
+              <div class="task-detail">
+                <h4>Indicator setup:</h4>
+                <ul>
+                  <li>Use <code>EMA(10)</code> and <code>EMA(20)</code> as short- and medium-term trend filters.</li>
+                  <li>Use a volatility-sensitive filter based on <code>VRVP</code>.</li>
+                  <li>Restrict entries to cases where price trades within 1% of the 52-week high.</li>
+                </ul>
+                <h4>Entry rules:</h4>
+                <ul>
+                  <li>Enter long on a pullback to a gap-fill level or to a rising intraday EMA, followed by an upward reversal.</li>
+                  <li>Alternatively, skip the initial move and enter on a breakout from a 15-minute flag pattern in the direction of the main trend.</li>
+                </ul>
+                <h4>Exit rules:</h4>
+                <ul>
+                  <li>Close the position at a local stop-loss level or with a default stop of roughly 1&ndash;2% from entry.</li>
+                  <li>Take profit at the 52-week high or at a default target of roughly 3&ndash;5%.</li>
+                  <li>Exit if price closes the day below the 10- or 20-day EMA.</li>
+                </ul>
+                <h4>Risk management and filters:</h4>
+                <ul>
+                  <li>Size the trade so that risk per position remains within 1&ndash;2% of total capital.</li>
+                  <li>Avoid chasing the initial gap move; prefer asymmetric entries after retracement or consolidation.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion">
+            <button class="accordion-header" onclick="toggleAccordion(this)">
+              <span><span class="difficulty-badge hard">Hard</span> One-Minute Scalping Strategy for SNAP</span>
+              <svg class="accordion-chevron w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div class="accordion-body">
+              <p class="text-xs text-gray-400 mb-3">Source: GitHub</p>
+              <p class="mb-3">One-minute scalping strategy for <code>SNAP</code> using momentum, liquidity, and volatility filters.</p>
+              <div class="task-detail">
+                <h4>Indicator construction:</h4>
+                <ul>
+                  <li>Use <code>Stochastic(5,3,3)</code> as a proxy for buyer/seller pressure and <code>CrossOver(%K, %D)</code> as the trigger.</li>
+                  <li>Use <code>RSI(3)</code> for micro-momentum confirmation.</li>
+                  <li>Use <code>SMA(volume, 20)</code> as a liquidity filter and <code>ATR(14)</code> with a threshold of 0.03 as a volatility filter.</li>
+                </ul>
+                <h4>Entry logic:</h4>
+                <ul>
+                  <li>Enter long when <code>%K</code> crosses above <code>%D</code>, <code>%K &gt; 80</code>, <code>RSI(3) &gt; 55</code>, current volume exceeds 1.2 &times; <code>SMA(volume, 20)</code>, and <code>ATR(14) &ge; 0.03</code>.</li>
+                  <li>Enter short under the mirrored conditions: downward crossover, <code>%K &lt; 20</code>, <code>RSI(3) &lt; 45</code>, sufficient volume, and the same ATR filter.</li>
+                </ul>
+                <h4>Exit logic:</h4>
+                <ul>
+                  <li>Use a take-profit of $0.01 from entry and a stop-loss of $0.02.</li>
+                  <li>Close on signal reversal or after a timeout of three bars.</li>
+                </ul>
+                <h4>Implementation constraints:</h4>
+                <ul>
+                  <li>Limit position size to 100&ndash;500 shares, with 100 shares as the default.</li>
+                  <li>Trade only during the main session, skip the first three minutes, and require sufficient rolling volume; an optional $25,000 balance filter may be applied for PDT compliance.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- CITATION -->
+    <section class="py-16 px-4 bg-gray-50" id="citation">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="section-title">Citation</h2>
+        <div class="mt-6 relative">
+          <pre class="bibtex-block"><code>@article{khoroshilov2025quantcodebench,
+    title={QuantCode-Bench: A Benchmark for Evaluating the Ability
+           of Large Language Models to Generate Executable
+           Algorithmic Trading Strategies},
+    author={Khoroshilov, Alexey and Chernysh, Alexey and
+            Ekhtibarov, Orkhan and Kamkia, Nini and
+            Zmitrovich, Dmitry},
+    year={2025}
+}</code></pre>
+          <button onclick="copyBibtex()" class="absolute top-3 right-3 text-xs bg-white border border-gray-300 rounded px-2 py-1 hover:bg-gray-100 transition" title="Copy to clipboard">Copy</button>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /bench-content -->
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="py-8 border-t border-gray-200 text-center text-sm text-gray-400 px-4">
+    <p>QuantCode-Bench &middot; Lime &middot; 2025</p>
+    <p class="mt-2">
+      Related:
+      <a href="https://livecodebench.github.io/" target="_blank" class="hover:text-blue-500">LiveCodeBench</a> &middot;
+      <a href="https://www.swebench.com/" target="_blank" class="hover:text-blue-500">SWE-bench</a> &middot;
+      <a href="https://evalplus.github.io/leaderboard.html" target="_blank" class="hover:text-blue-500">EvalPlus</a>
+    </p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
