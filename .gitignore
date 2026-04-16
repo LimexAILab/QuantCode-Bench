@@ -1,0 +1,70 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Benchmark outputs
+results/
+results_*/
+strategies/
+trajectories/
+trajectories_*/
+*.log
+benchmark_*.log
+
+# Data cache
+.cache/
+data/cache/*.pkl
+trades_db.csv
+
+# Old/intermediate data files
+data/benchmark_tasks.json
+data/benchmark_tasks_v2.json
+data/price_level_classification.json
+
+# Temporary data files
+*.csv
+*.db
+
+# One-off scripts
+filter_llm/
+
+# Launch/run scripts
+run_benchmark_*.sh
+run_full_benchmark*.sh
+run_rerun_*.sh
+
+# OS
+.DS_Store
+Thumbs.db
+PAPER.md

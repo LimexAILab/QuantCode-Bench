@@ -1,0 +1,19 @@
+# Core dependencies
+backtrader>=1.9.78
+openai>=1.0.0
+yfinance>=0.2.0
+
+# Async support
+asyncio-throttle>=1.0.0
+aiohttp>=3.9.0
+
+# Data processing
+pandas>=2.0.0
+
+# Progress bars
+tqdm>=4.65.0
+
+# Optional: for local model serving
+# sglang>=0.1.0
+# vllm>=0.3.0
+
