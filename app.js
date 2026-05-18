@@ -3,10 +3,10 @@ const benchmarks = [
   { id: 'quantcode-bench', name: 'QuantCode-Bench', active: true },
 ];
 
-document.querySelectorAll('.bench-tab').forEach(tab => {
+document.querySelectorAll('.bench-tab[data-bench]').forEach(tab => {
   tab.addEventListener('click', () => {
     const benchId = tab.dataset.bench;
-    document.querySelectorAll('.bench-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.bench-tab[data-bench]').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.bench-content').forEach(c => c.classList.remove('active'));
     tab.classList.add('active');
     const target = document.getElementById('bench-' + benchId);
