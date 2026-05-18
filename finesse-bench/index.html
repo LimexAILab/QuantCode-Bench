@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FINESSE-Bench</title>
+  <meta
+    name="description"
+    content="FINESSE-Bench: A Hierarchical Benchmark Suite for Financial Domain Knowledge and Technical Analysis in Large Language Models"
+  />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="bg-white text-gray-900 font-sans">
+
+  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-gray-200">
+    <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <a href="../" class="bench-tab">QuantCode-Bench</a>
+        <span class="bench-tab active">FINESSE-Bench</span>
+      </div>
+
+      <nav class="hidden md:flex items-center gap-5 text-sm">
+        <a href="#overview" class="text-gray-600 hover:text-blue-600 transition">Overview</a>
+        <a href="#leaderboard" class="text-gray-600 hover:text-blue-600 transition">Leaderboard</a>
+        <a href="#compare" class="text-gray-600 hover:text-blue-600 transition">Compare</a>
+        <a href="#datasets" class="text-gray-600 hover:text-blue-600 transition">Datasets</a>
+        <a href="#citation" class="text-gray-600 hover:text-blue-600 transition">Citation</a>
+      </nav>
+
+
+      <div class="flex items-center gap-3">
+        <a href="#leaderboard" class="text-sm text-gray-600 hover:text-blue-600 transition hidden md:inline">
+          Full leaderboard
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="pt-16 pb-12 text-center px-4">
+    <h1 class="text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight max-w-5xl mx-auto">
+      FINESSE-Bench: A Hierarchical Benchmark Suite for
+      <span class="text-blue-600">Financial Domain Knowledge and Technical Analysis</span>
+      in Large Language Models
+    </h1>
+
+    <p class="mt-6 text-gray-500 text-base md:text-lg max-w-3xl mx-auto leading-relaxed">
+      <span class="text-gray-800 font-medium">Dmitry Stanishevskii</span>,
+      <span class="text-gray-800 font-medium">Nini Kamkia</span>,
+      <span class="text-gray-800 font-medium">Alexey Khoroshilov</span>,
+      <span class="text-gray-800 font-medium">Dmitry Zmitrovich</span>,
+      <span class="text-gray-800 font-medium">Denis Kokosinskii</span>,
+      <span class="text-gray-800 font-medium">Zhirayr Hayrapetyan</span>,
+      <span class="text-gray-800 font-medium">Andrei Kalmykov</span>
+    </p>
+    <p class="mt-1 text-gray-400 text-sm">Lime</p>
+
+    <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+      <a href="https://arxiv.org/abs/2605.15482" target="_blank" class="btn-primary">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+        </svg>
+        Paper
+      </a>
+
+      <a href="https://github.com/LimexAILab/FINESSE-Bench" target="_blank" class="btn-secondary">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+        </svg>
+        Code
+      </a>
+
+      <a href="#leaderboard" class="btn-secondary">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6m8 0V5a2 2 0 012-2h2a2 2 0 012 2v14m8 0v-4a2 2 0 00-2-2h-2a2 2 0 00-2 2v4"/>
+        </svg>
+        Full leaderboard
+      </a>
+
+      <a href="#compare" class="btn-secondary">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M3 3v18h18M7 14l3-3 3 2 5-6"/>
+        </svg>
+        Compare models
+      </a>
+    </div>
+
+
+    <div class="mt-10 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+      <div class="stat-card">
+        <div class="stat-value">3,993</div>
+        <div class="stat-label">questions</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">8</div>
+        <div class="stat-label">specialized datasets</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">3</div>
+        <div class="stat-label">benchmark groups</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">en / ru</div>
+        <div class="stat-label">languages</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OVERVIEW -->
+  <section class="py-12 bg-gray-50" id="overview">
+    <div class="max-w-5xl mx-auto px-4">
+      <p class="text-lg text-gray-700 leading-relaxed text-center max-w-4xl mx-auto">
+        <strong>FINESSE-Bench</strong> is a hierarchical benchmark suite for evaluating financial
+        competencies in LLMs. It combines <strong>eight specialized datasets</strong> with
+        <strong>3,993 questions</strong> spanning foundational finance, exam-style reasoning,
+        technical analysis, derivatives trading, and a Russian-language olympiad block. The suite
+        is designed to measure domain breadth, performance degradation across difficulty levels,
+        and transfer from classical public financial benchmarks to more professional finance tasks.
+      </p>
+    </div>
+  </section>
+
+  <!-- GROUPS -->
+  <section class="py-16 px-4" id="groups">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="section-title">Benchmark Groups</h2>
+      <p class="section-subtitle">
+        Three leaderboard views for three different kinds of financial competence.
+      </p>
+      <div id="groupCards" class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+    </div>
+  </section>
+
+  <!-- FULL LEADERBOARD -->
+  <section class="py-16 px-4 bg-gray-50" id="leaderboard">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="section-title">Full Leaderboard</h2>
+      <p class="section-subtitle">
+        Switch between aggregated groups and individual datasets. Search and sort by score.
+      </p>
+
+      <div class="mt-8 grid grid-cols-1 lg:grid-cols-[1fr_260px] gap-6 items-start">
+        <div class="bg-white border border-gray-200 rounded-2xl p-5">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div>
+              <label class="control-label">Benchmark view</label>
+              <select id="leaderboardMetric" class="control-input"></select>
+            </div>
+            <div>
+              <label class="control-label">Search model</label>
+              <input id="leaderboardSearch" class="control-input" type="text" placeholder="e.g. Claude, Qwen, GPT" />
+            </div>
+            <div class="flex items-end">
+              <button id="leaderboardReset" class="btn-secondary w-full justify-center">Reset filters</button>
+            </div>
+          </div>
+
+          <div class="mt-6 overflow-x-auto">
+            <table class="data-table w-full" id="leaderboardTable">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th class="text-left">Model</th>
+                  <th>Score</th>
+                  <th>CI</th>
+                  <th>Δ public→exam</th>
+                  <th>Δ public→TA</th>
+                </tr>
+              </thead>
+              <tbody id="leaderboardBody"></tbody>
+            </table>
+          </div>
+          <div class="mt-4 flex justify-center">
+            <button id="leaderboardToggle" class="btn-secondary hidden">Show all</button>
+          </div>
+        </div>
+
+        <aside class="bg-white border border-gray-200 rounded-2xl p-5">
+          <h3 class="font-semibold text-base text-gray-900">Most balanced models</h3>
+          <p class="text-sm text-gray-500 mt-1">
+            Computed from the three aggregated benchmark groups.
+          </p>
+          <div id="balancedModels" class="mt-4 space-y-3"></div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARE -->
+  <section class="py-16 px-4" id="compare">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="section-title">Compare Models</h2>
+      <p class="section-subtitle">
+        Select up to 10 models and compare them on one benchmark view. CI overlay appears automatically when ciLow/ciHigh are provided.
+      </p>
+
+      <div class="mt-8 grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-6 items-start">
+        <aside class="bg-white border border-gray-200 rounded-2xl p-5">
+          <div class="space-y-4">
+            <div>
+              <label class="control-label">Comparison view</label>
+              <select id="compareMetric" class="control-input"></select>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <label class="control-label !mb-0">Show confidence intervals</label>
+              <input id="compareCI" type="checkbox" class="toggle-checkbox" />
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <label class="control-label !mb-0">Selected models</label>
+                <span id="selectedCount" class="text-xs text-gray-500">0 / 10</span>
+              </div>
+              <div id="modelPicker" class="model-picker"></div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <button id="compareTop5" class="btn-secondary w-full justify-center">Top 5</button>
+              <button id="compareReset" class="btn-secondary w-full justify-center">Reset</button>
+            </div>
+
+            <p id="ciNote" class="text-xs text-amber-600 hidden">
+              CI overlay is enabled, but the selected view has no ciLow/ciHigh values in <code>CI_DATA</code> yet.
+            </p>
+          </div>
+        </aside>
+
+        <div class="bg-white border border-gray-200 rounded-2xl p-5">
+          <h3 class="font-semibold text-lg mb-4">Selected models</h3>
+          <div class="chart-container-wide">
+            <canvas id="compareChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- DATASETS -->
+  <section class="py-16 px-4" id="datasets">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="section-title">Dataset Explorer</h2>
+      <p class="section-subtitle">
+        Eight specialized datasets covering financial exams, technical analysis, derivatives, and multilingual reasoning.
+      </p>
+
+      <div id="datasetExplorer" class="mt-8 space-y-4"></div>
+    </div>
+  </section>
+
+
+  <!-- CITATION -->
+  <section class="py-16 px-4" id="citation">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="section-title">Citation</h2>
+      <div class="mt-6 relative">
+        <pre class="bibtex-block"><code>@article{stanishevskii2026finessebench,
+    title={FINESSE-Bench: A Hierarchical Benchmark Suite for Financial Domain Knowledge and Technical Analysis in Large Language Models},
+    author={Dmitry Stanishevskii and Nini Kamkia and Alexey Khoroshilov and Dmitry Zmitrovich and Denis Kokosinskii and Zhirayr Hayrapetyan and Andrei Kalmykov},
+    year={2026},
+    url={https://github.com/LimexAILab/FINESSE-Bench}
+  }</code></pre>
+        <button onclick="copyBibtex()" class="absolute top-3 right-3 text-xs bg-white border border-gray-300 rounded px-2 py-1 hover:bg-gray-100 transition" title="Copy to clipboard">
+          Copy
+        </button>
+      </div>
+    </div>
+  </section>
+
+
+  <footer class="py-8 border-t border-gray-200 text-center text-sm text-gray-400 px-4">
+    <p>FINESSE-Bench &middot; Lime &middot; 2026</p>
+    <p class="mt-2">
+      Related:
+      <a href="https://limexailab.github.io/QuantCode-Bench/" target="_blank" class="hover:text-blue-500">QuantCode-Bench</a>
+      &middot;
+      <a href="https://github.com/LimexAILab/FINESSE-Bench" target="_blank" class="hover:text-blue-500">Repository</a>
+    </p>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
