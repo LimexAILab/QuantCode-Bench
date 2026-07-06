@@ -9,11 +9,11 @@ const state = {
   leaderboardSearch: '',
   leaderboardExpanded: false,
   selectedModels: [
+    'GPT-5.5',
+    'Claude Opus 4.8',
     'Claude Sonnet 4.6',
     'Kimi K2.5',
-    'GPT-5.2',
-    'Qwen3.5 Plus 2026-02-15',
-    'GLM-5',
+    'GLM-5.2',
   ],
   showCI: true,
 };
